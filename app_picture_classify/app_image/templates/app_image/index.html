@@ -1,0 +1,37 @@
+{% extends 'app_image/base.html' %}
+{% block content %}
+    <div class="container">
+        <div class="d-flex justify-content-center"> <!-- Відцентрований контейнер -->
+            <div class="text-center">
+                {% if form.errors and form.non_field_errors %}
+                <div class="alert alert-danger" role="alert">
+                    A simple danger alert—check it out!
+                </div>
+                {% endif %}
+
+                <form action="{% url 'app_image:home' %}" method="post" enctype="multipart/form-data" class="mb-3">
+                    {% csrf_token %}
+                    <div class="form-group" style="margin-top: 20px; width: 22rem;">
+                        <div class="custom-file d-grid  col-md-12 text-center">
+                            {{ form.original_file_name }}
+                            <label class="btn btn-primary" for="image">Вибрати файл</label>
+
+                            <button type="submit" class="btn btn-warning" style="margin-top: 20px;">Класифікувати</button> 
+                        </div>
+                    </div>
+                </form>
+
+                {% if uploaded_image_url %}
+                <div class="card" style="width: 22rem; margin: 20px auto;">
+                    <img src="{{ uploaded_image_url }}" class="card-img-top" alt="Uploaded Image">
+                    <div class="card-body">
+                        <p style="font-size: 20px;">{{ output_text | linebreaks }}</p>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
